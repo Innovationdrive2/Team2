@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+		integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+		crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"
+		integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V"
+		crossorigin="anonymous"></script>
+	<!-- jQuery -->
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<title>CUBE</title>
+</head>
+
+<body>
+	<nav class="navbar">
+		<ul class="nav-list" style="display: flex; flex-direction: row; list-style-type: none; ">
+			<a class="navbar-brand logo" href="/">
+				<img src="{{ url_for('static', filename='images/Logonew.png') }}" alt="Logo">
+			</a>
+			<li><a href="#monitor" style="text-decoration: none; color: black; font-weight: bold; margin-left: 60px;">Monitoring</a></li>
+			<li><a href="#config" style="text-decoration: none; color: black; font-weight: bold; margin-left: 60px;">Configuration</a></li>
+			<li><a href="#debug" style="text-decoration: none; color: black; font-weight: bold; margin-left: 60px;">Troubleshoot</a></li>
+		</ul>
+
+		<div class="rightNav">
+			<form action="{{ url_for('logout') }}" method="POST">
+    			<button class="btn btn-outline-success" button type="submit">Logout</button>
+			<style="color: white; border-radius: 10px; background-color: blue; width: 100px; 
+                    position: relative; right: 50px; padding: 5px;" >
+		</form>
+		</div>
+	</nav>
+	<div>
+		<h1 class="text-white">Monitoring</h1>
+		<ul class="nav nav-tabs">
+			<li class="nav-item">
+				<a class="nav-link active" data-toggle="tab" href="#voice-status">Voice status</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" data-toggle="tab" href="#running-config">Running config</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" data-toggle="tab" href="#show-version">Show version</a>
+			</li>
+		</ul>
+
+		<div class="tab-content">
+			<div id="voice-status" class="tab-pane show active">
+				<h3>Voice status content</h3>
+			</div>
+			<div id="running-config" class="tab-pane">
+				<div class="d-flex justify-content-center">
+					<h3 class="text-white">Running Configuration</h3>
+				</div>
+				<div class="Monitor container-fluid">
+					{% if message %}
+					<div class="alert alert-danger d-flex" role="alert">
+						{{ message }}
+					</div>
+					{% else %}
+					<div>
+						<h1>Show Running Output</h1>
+						<pre>{{ output }}</pre>
+						# <h1>Interface Status</h1>
+						# <pre>{{ output1 }}</pre>
+						# <h1>Dialpeer status Status</h1>
+						# <pre>{{ output2 }}</pre>
+					</div>
+					{% endif %}
+				</div>
+			</div>
+			<div id="show-version" class="tab-pane">
+				<h3>Show version content</h3>
+				<div>
+					<!-- <h1>CUBE status</h1>
+					<pre>{{ output1 }}</pre>
+					<h1>Dialpeer status Status</h1>
+					<pre>{{ output2 }}</pre> -->
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script>
+	// Show the modal when the add button is clicked
+	const addButton = document.getElementById('add-button');
+	const addModal = document.getElementById('add-modal');
+
+	addButton.addEventListener('click', function () {
+		addModal.style.display = 'block';
+	});
+
+	// Hide the modal when the close button or outside the modal is clicked
+	const closeButton = document.querySelector('.close');
+	const modalBackdrop = document.querySelector('.modal-backdrop');
+
+	closeButton.addEventListener('click', function () {
+		addModal.style.display = 'none';
+	});
+
+	modalBackdrop.addEventListener('click', function () {
+		addModal.style.display = 'none';
+	});
+
+	// Prevent the form from submitting and close the modal when the submit button is clicked
+	const form = document.querySelector('form');
+
+	form.addEventListener('submit', function (event) {
+		event.preventDefault();
+		addModal.style.display = 'none';
+	});
+</script>
+<script>
+	$(document).ready(function () {
+		// Activate the first tab on page load
+		$('.nav-tabs a:first').tab('show');
+
+		// Add a click event listener to each tab link
+		$('.nav-tabs a').click(function () {
+			// Remove 'active' class from all tab links
+			$('.nav-tabs a').removeClass('active');
+
+			// Add 'active' class to the clicked tab link
+			$(this).addClass('active');
+
+			// Show the corresponding tab content
+			var target = $(this).attr('href');
+			$(target).show().siblings('.tab-pane').hide();
+		});
+	});
+
+</script>
+
+</html>
