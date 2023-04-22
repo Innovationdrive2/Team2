@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+    <title>CUBE</title>
+</head>
+    <body>
+        <img src= "{{ url_for('static', filename='images/tekbg.png') }}" alt="no img" class="img">
+        <div class="login">
+            <h1>Welcome!</h1>
+	    <h2>Please login to your account</h2>
+            <form>
+                <p>User Name</p>
+                <input type="text" placeholder="User Name" id="username">
+                <p id="user_error"></p>
+                <p>Password</p>
+                <input type="password" placeholder="Password" id="password">
+                <p id="pass_error"></p>
+                <button type="submit" class="submit" id="submit" ><a href="#" onclick="validated()">Login</a></button>
+            </form>
+            <script src="{{ url_for('static', filename='js/login.js') }}"></script>
+            
+        </div>
+        
+    </body>
+</html>
